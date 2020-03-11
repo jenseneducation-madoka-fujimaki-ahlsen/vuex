@@ -2,7 +2,8 @@
   <div class="home">
     <top pageTitle="E - WALLET" cardType="ACTIVE CARD" />
     <card v-bind:card="selectedCard" />
-    <cardStack v-bind:cards="cards" v-on:selectCard="selectCard" />
+    <button @click="removeCard">Remove</button>
+    <cardStack v-on:selectCard="selectCard" />
     <router-link class="button" to="/add-card">ADD NEW CARD</router-link>
   </div>
 </template>
@@ -18,32 +19,36 @@ export default {
     Card,
     CardStack
   },
-  props: ["newCard"],
+  // props: ["newCard"],
   computed: {
-    cards() {
-      return this.$root.$data.cards;
-    }
+    // selectedCard() {
+    //   return this.$store.state.cards[
+    //     this.$store.state.cards.findIndex(c => (c.id = this.activeCardId))
+    //   ];
+    // }
   },
   data: () => ({
+    // activeCardId: 1
     selectedCard: {
-      id: 4,
-      vendor: "evil",
-      number: "4444 4444 4444 4444",
-      name: "MADOKA FUJIMAKI AHLSÈN",
-      validMonth: "10",
-      validYear: "31"
+      // id: 4,
+      // vendor: "evil",
+      // number: "4444 4444 4444 4444",
+      // name: "MADOKA FUJIMAKI AHLSÈN",
+      // validMonth: "10",
+      // validYear: "31"
     }
   }),
-  mounted() {
-    if (this.newCard) {
-      this.newCard.id = this.cards.length + 1;
-      this.cards.push(this.newCard);
-      console.log(this.cards);
-    }
+  created() {
+    this.selectedCard = this.$store.state.cards[0];
   },
   methods: {
     selectCard(card) {
+      console.log(card);
       this.selectedCard = card;
+    },
+    removeCard() {
+      this.$store.dispatch("removeCard", this.selectedCard);
+      this.selectedCard = this.$store.state.cards[0];
     }
   }
 };

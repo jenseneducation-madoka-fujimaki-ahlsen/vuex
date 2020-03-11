@@ -3,9 +3,7 @@
     <top pageTitle="ADD NEW CARD" cardType="NEW CARD" />
     <card v-bind:card="newCard" />
     <card-form v-model="newCard" />
-    <router-link class="button" :to="{ name: 'Home', params: { newCard } }"
-      >ADD CARD</router-link
-    >
+    <button class="button" @click="addCard">ADD CARD</button>
   </div>
 </template>
 
@@ -29,6 +27,14 @@ export default {
       validYear: "YY"
     }
   }),
-  methods: {}
+  methods: {
+    async addCard() {
+      console.log("running");
+      if (this.newCard) {
+        await this.$store.dispatch("addCard", this.newCard);
+        this.$router.push("/");
+      }
+    }
+  }
 };
 </script>

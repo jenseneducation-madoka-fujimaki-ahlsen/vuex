@@ -16,9 +16,14 @@ export default {
   components: {
     Card
   },
-  props: {
-    cards: Array
+  computed: {
+    cards() {
+      return this.$store.state.cards;
+    }
   },
+  // props: {
+  //   cards: Array
+  // },
   data: () => ({}),
   methods: {}
 };
